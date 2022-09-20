@@ -7,7 +7,14 @@ class UserController {
   public async create(req: Request, res: Response) {
     const createUser = new CreateUserUseCase();
 
-    const result = await createUser.execute(req.body);
+    const body = {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      password: req.body.password,
+    };
+
+    const result = await createUser.execute(body);
 
     return res.send(result);
   }
@@ -22,8 +29,6 @@ class UserController {
 
     const result = await signInUser.execute(body);
 
-    console.log(result);
-
     return res.send(result);
   }
 
@@ -31,8 +36,6 @@ class UserController {
     const application = new FindAllUserUseCase();
 
     const result = await application.execute();
-
-    console.log(result);
 
     return res.send(result);
   }

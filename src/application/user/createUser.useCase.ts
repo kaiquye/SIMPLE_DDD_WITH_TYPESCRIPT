@@ -19,14 +19,14 @@ export class CreateUserUseCase implements IUseCase<UserEntity, IResponse> {
         data.password
       );
 
-      let password = auth.genereteHash();
+      let passwordHash = auth.genereteHash();
 
       const user = new UserDomain(
         new UserRepository(),
         data.name,
         data.phone,
         data.email,
-        password
+        passwordHash
       );
 
       const created = await user.create();
