@@ -9,7 +9,10 @@ enum errosRefCodes {
 }
 
 export class FindAllUserUseCase implements IUseCase<void, UserEntity[]> {
-  private readonly erroFindAllMsg = "error when fetching all users";
+  private readonly errorFindAllMsg = "error when fetching all users";
+
+  constructor() {}
+
   async execute(): Promise<Result<UserEntity[]>> {
     const domain = new UserDomain(new UserRepository());
 
@@ -18,7 +21,7 @@ export class FindAllUserUseCase implements IUseCase<void, UserEntity[]> {
 
       return Result.ok(result, 200);
     } catch (errorFindUsers) {
-      return Result.fail(this.erroFindAllMsg, 500, errosRefCodes.INTERNAL);
+      return Result.fail(this.errorFindAllMsg, 500, errosRefCodes.INTERNAL);
     }
   }
 }

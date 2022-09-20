@@ -18,6 +18,8 @@ enum errosRefCodes {
 export class CreateUserUseCase implements IUseCase<UserEntity, IResponse> {
   private readonly _errorCreateUser = "unable to create a new user";
 
+  constructor() {}
+
   async execute(data?: UserEntity): Promise<Result<IResponse>> {
     try {
       const auth = new AuthDomain(
