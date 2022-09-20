@@ -16,7 +16,7 @@ class UserController {
 
     const result = await createUser.execute(body);
 
-    return res.send(result);
+    return result.getHttpResult(res);
   }
 
   public async sign(req: Request, res: Response) {
@@ -29,7 +29,7 @@ class UserController {
 
     const result = await signInUser.execute(body);
 
-    return res.send(result);
+    return result.getHttpResult(res);
   }
 
   async findAllUser(req: Request, res: Response) {
@@ -37,7 +37,7 @@ class UserController {
 
     const result = await application.execute();
 
-    return res.send(result);
+    return result.getHttpResult(res);
   }
 }
 

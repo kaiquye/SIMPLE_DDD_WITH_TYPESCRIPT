@@ -1,6 +1,6 @@
 import { UserEntity } from "../../domain/user/user.entity";
 import { UserDomain } from "../../domain/user/user.domain";
-import { UserRepository } from "../../infrastructure/repository/user/Repository";
+import { UserRepository } from "../../infrastructure/database/repository/user/Repository";
 import { AuthDomain } from "../../domain/auth/auth.domain";
 import { IUseCase } from "../useCase.adapter";
 import { Result } from "../../infrastructure/template/error/result.template";

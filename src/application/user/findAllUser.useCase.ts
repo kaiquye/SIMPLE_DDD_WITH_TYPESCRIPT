@@ -1,7 +1,7 @@
 import { IUseCase } from "../useCase.adapter";
 import { UserEntity } from "../../domain/user/user.entity";
 import { UserDomain } from "../../domain/user/user.domain";
-import { UserRepository } from "../../infrastructure/repository/user/Repository";
+import { UserRepository } from "../../infrastructure/database/repository/user/Repository";
 import { Result } from "../../infrastructure/template/error/result.template";
 
 enum errosRefCodes {
