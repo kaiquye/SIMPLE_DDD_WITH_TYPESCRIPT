@@ -2,15 +2,23 @@ import { IUseCase } from "../useCase.adapter";
 import { UserEntity } from "../../domain/user/user.entity";
 import { UserDomain } from "../../domain/user/user.domain";
 import { UserRepository } from "../../infrastructure/repository/user/Repository";
+import { Result } from "../../infrastructure/template/error/result.template";
+
+enum errosRefCodes {
+  INTERNAL = "error.user.services.internal.level.adm",
+}
 
 export class FindAllUserUseCase implements IUseCase<void, UserEntity[]> {
-  execute(): Promise<UserEntity[]> {
+  private readonly erroFindAllMsg = "error when fetching all users";
+  async execute(): Promise<Result<UserEntity[]>> {
     const domain = new UserDomain(new UserRepository());
 
     try {
-      return domain.findAllUsersActive();
+      const result = await domain.findAllUsersActive();
+
+      return Result.ok(result, 200);
     } catch (errorFindUsers) {
-      return errorFindUsers.members;
+      return Result.fail(this.erroFindAllMsg, 500, errosRefCodes.INTERNAL);
     }
   }
 }

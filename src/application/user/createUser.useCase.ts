@@ -3,6 +3,7 @@ import { UserDomain } from "../../domain/user/user.domain";
 import { UserRepository } from "../../infrastructure/repository/user/Repository";
 import { AuthDomain } from "../../domain/auth/auth.domain";
 import { IUseCase } from "../useCase.adapter";
+import { Result } from "../../infrastructure/template/error/result.template";
 
 interface IResponse {
   user: UserEntity;
@@ -10,8 +11,14 @@ interface IResponse {
   createdAt?: Date | string;
 }
 
+enum errosRefCodes {
+  INTERNAL = "error.internal.server.contact.administrator",
+}
+
 export class CreateUserUseCase implements IUseCase<UserEntity, IResponse> {
-  async execute(data?: UserEntity): Promise<IResponse> {
+  private readonly _errorCreateUser = "unable to create a new user";
+
+  async execute(data?: UserEntity): Promise<Result<IResponse>> {
     try {
       const auth = new AuthDomain(
         new UserRepository(),
@@ -34,13 +41,20 @@ export class CreateUserUseCase implements IUseCase<UserEntity, IResponse> {
       if (created) {
         const token = await auth.signIn();
 
-        return {
-          user: created,
-          access_token: token,
-        };
+        return Result.ok<IResponse>(
+          {
+            user: created,
+            access_token: token,
+          },
+          201
+        );
       }
-    } catch (e) {
-      return e.message;
+    } catch (errorInCreateUser) {
+      return Result.fail<IResponse>(
+        this._errorCreateUser,
+        400,
+        errosRefCodes.INTERNAL
+      );
     }
   }
 }
