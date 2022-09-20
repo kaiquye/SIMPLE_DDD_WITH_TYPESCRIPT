@@ -12,10 +12,10 @@ Os controladores são os pontos de entrada para o contexto do aplicativo.
 
 Um caso de uso é uma unidade lógica de negócios.
 
-É uma classe que deve ter um executemétodo que será chamado pelos controladores.
+É uma classe que deve ter um metodo **execute** que será chamado pelos controladores.
 
 Ele pode ter um construtor para definir suas dependências (implementações concretas - também conhecidas como adaptadores - dos objetos de porta ) ou seu contexto de execução.
 
-Tome cuidado! Um caso de uso deve ter apenas uma responsabilidade comercial precisa!
+**Um caso de uso deve ter apenas uma responsabilidade comercial**, que fica dentro do metodo execute!
 
 Um caso de uso pode chamar objetos na mesma camada (como repositórios de dados) ou na camada de domínio.
